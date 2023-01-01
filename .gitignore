@@ -2,3 +2,4 @@ env/
 wheels/
 data/external/
 test/
+.vscode/
