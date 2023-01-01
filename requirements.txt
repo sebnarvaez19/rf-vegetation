@@ -12,4 +12,5 @@ rioxarray
 geopandas
 earthengine-api
 geemap
+geedim
 statgis
