@@ -1,7 +1,8 @@
 env/
-wheels/
 data/external/
 data/raster/
+src/functions/__pycache__/
 test/
 .vscode/
 qgis/
+wheels/
