@@ -102,7 +102,7 @@ def add_dem(image: ee.Image, slope: bool = False, dem: str = "SRTM_30m") -> ee.I
             Exception("INVALID DEM, see the options in the docstring")
 
     # Add the DEM as a Band.
-    dem = ee.Image(dem_path).rename("DEM")
+    dem = ee.Image(dem_path).rename("ELEVATION")
     image = image.addBands(dem, None, True)
 
     # If the slope is required add it.
