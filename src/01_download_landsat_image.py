@@ -8,7 +8,7 @@ import rasterio
 from rasterio.merge import merge
 from statgis.landsat_functions import landsat_cloud_mask, landsat_scaler
 
-from functions.gee_processing import add_dem, add_distance, add_indices, rename_bands
+from functions.gee_processing import add_dem, add_distance, add_indices, add_land_cover, rename_bands
 
 # initialize Earth Engine
 ee.Initialize()
@@ -64,8 +64,11 @@ def main():
     img = add_dem(img, slope=True)
 
     # Add the distance to drainage and shoreline
-    img = add_distance(img, drainages, "DISTANCE_DRAIANGES")
+    img = add_distance(img, drainages, "DISTANCE_DRAINAGES")
     img = add_distance(img, shoreline, "DISTANCE_SHORELINE")
+
+    # Add land cover classification
+    img = add_land_cover(img)
 
     # Download the image by tiles because the large image size
     geemap.download_ee_image_tiles(
@@ -93,7 +96,8 @@ def main():
     # Save the mosaic
     with rasterio.open(save_image + "/landsat_img.tiff", "w", **meta_data) as src:
         src.write(mosaic)
-
+        src.descriptions = tuple(img.bandNames().getInfo())
+        
     return None
 
 
