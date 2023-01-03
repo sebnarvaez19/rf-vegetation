@@ -52,6 +52,7 @@ def add_indices(image: ee.Image) -> ee.Image:
         "NDMI": "(b('NIR') - b('RED'))/(b('NIR') + b('RED'))",
         "SAVI": "((b('NIR') - b('RED'))/(b('NIR') + b('RED') + 0.5))*(1.5)",
         "GCI": "(b('NIR')/b('GREEN')) - 1",
+        "BGR": "b('BLUE')/b('GREEN')"
     }
 
     # For each index, calculate it and add it to the image.
