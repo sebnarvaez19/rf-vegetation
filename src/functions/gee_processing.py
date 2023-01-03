@@ -142,3 +142,45 @@ def add_distance(
     image = image.addBands(dist, None, True)
 
     return image
+
+
+def add_land_cover(image: ee.Image, year: int=2019) -> ee.Image:
+    """
+    Add Land Cover classification from COPERNICUS in a specific year.
+
+    Parameters
+    ----------
+    image : ee.Image
+        Image of interest.
+
+    year : int, optional (2019)
+        Year of the land cover image, select one from 2015 to 2019.
+
+    Returns
+    -------
+    image : ee.Image
+        Original image with land cover classifications as a band.
+    """
+    
+    # Get land cover image
+    land_cover = (
+        ee.Image(f"COPERNICUS/Landcover/100m/Proba-V-C3/Global/{year}")
+        .select("discrete_classification")
+    )
+    
+    # Define old labels
+    old_labels = [
+        0, 20, 30, 40, 50, 60, 70, 80, 90, 100, 111, 112, 113, 114, 115, 116, 
+        121, 122, 123, 124, 126, 200
+    ]
+
+    # Define new labels
+    new_labels = [i for i in range(len(old_labels))]
+
+    # Change the old labels with the new labels and rename the band
+    land_cover = land_cover.remap(old_labels, new_labels).rename("LAND_COVER")
+
+    # Add land cover to the image
+    image = image.addBands(land_cover, None, True)
+
+    return image
