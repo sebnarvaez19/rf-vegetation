@@ -8,7 +8,7 @@ import rasterio
 from rasterio.merge import merge
 from statgis.landsat_functions import landsat_cloud_mask, landsat_scaler
 
-from functions.gee_processing import add_indices, rename_bands
+from functions.gee_processing import add_dem, add_distance, add_indices, rename_bands
 
 # initialize Earth Engine
 ee.Initialize()
@@ -40,6 +40,10 @@ def main():
     bbox = ee.Geometry.BBox(*lims)
     fnet = geemap.fishnet(bbox, rows=2, cols=2)
 
+    # Load the shoreline and the drainages to calculate their distance rasters
+    shoreline = ee.FeatureCollection("projects/ee-rf-vegetation-guajira/assets/shoreline")
+    drainages = ee.FeatureCollection("projects/ee-rf-vegetation-guajira/assets/drainage")
+
     # Load landsat image collection and filter by date and region, also scale
     # the images and mask the clouds and calculate the spatial indeces related
     # to vegetation
@@ -55,6 +59,13 @@ def main():
 
     # Reduce the images to the mean
     img = L7.mean()
+
+    # Add the elevation and slope
+    img = add_dem(img, slope=True)
+
+    # Add the distance to drainage and shoreline
+    img = add_distance(img, drainages, "DISTANCE_DRAIANGES")
+    img = add_distance(img, shoreline, "DISTANCE_SHORELINE")
 
     # Download the image by tiles because the large image size
     geemap.download_ee_image_tiles(
