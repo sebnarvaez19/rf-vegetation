@@ -94,10 +94,10 @@ def main():
     )
 
     # Save the mosaic
-    with rasterio.open(save_image + "/landsat_img.tiff", "w", **meta_data) as src:
+    with rasterio.open(save_image + "/train_img.tiff", "w", **meta_data) as src:
         src.write(mosaic)
         src.descriptions = tuple(img.bandNames().getInfo())
-        
+
     return None
 
 
