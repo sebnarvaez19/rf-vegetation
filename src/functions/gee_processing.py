@@ -15,11 +15,12 @@ def rename_bands(image: ee.Image) -> ee.Image:
     image : ee.Image
         Image with bands filtereds and renamed.
     """
-    # Define the original and the new names
+
+    # Define the original and the new names.
     ori_names = ["SR_B1", "SR_B2", "SR_B3", "SR_B4", "ST_B6"]
     new_names = ["BLUE", "GREEN", "RED", "NIR", "TEMPERATURE"]
 
-    # Select the bands with the original names an rename them
+    # Select the bands with the original names an rename them.
     image = image.select(ori_names).rename(new_names)
 
     return image
@@ -43,6 +44,7 @@ def add_indices(image: ee.Image) -> ee.Image:
         Image with the spatial indices.
     """
 
+    # Define the indeces formulas.
     indices = {
         "NDVI": "(b('NIR') - b('RED'))/(b('NIR') + b('RED'))",
         "EVI": "2.5*((b('NIR') - b('RED'))/ \
@@ -52,6 +54,7 @@ def add_indices(image: ee.Image) -> ee.Image:
         "GCI": "(b('NIR')/b('GREEN')) - 1",
     }
 
+    # For each index, calculate it and add it to the image.
     for name, formula in indices.items():
         image = image.addBands(
             image.expression(formula).toFloat().rename(name), None, True
@@ -81,10 +84,11 @@ def add_dem(image: ee.Image, slope: bool = False, dem: str = "SRTM_30m") -> ee.I
 
     Returns
     -------
-    image :ee.Image
+    image : ee.Image
         Image with the DEM band (and Slope if it was required).
     """
 
+    # Select the DEM.
     match dem:
         case "SRTM_30m":
             dem_path = "USGS/SRTMGL1_003"
@@ -97,11 +101,43 @@ def add_dem(image: ee.Image, slope: bool = False, dem: str = "SRTM_30m") -> ee.I
         case _:
             Exception("INVALID DEM, see the options in the docstring")
 
+    # Add the DEM as a Band.
     dem = ee.Image(dem_path).rename("DEM")
     image = image.addBands(dem, None, True)
 
+    # If the slope is required add it.
     if slope:
         slope = ee.Terrain.slope(dem).rename("SLOPE")
         image = image.addBands(slope, None, True)
+
+    return image
+
+
+def add_distance(
+    image: ee.Image, features: ee.FeatureCollection, name: str = "DISTANCE"
+) -> ee.Image:
+    """
+    Functio to add a band with the distance in meters from the features in a
+    feature collections.
+
+    Parameters
+    ----------
+    image : ee.Image
+        Image of interest.
+
+    features : ee.FeatureCollection
+        Feature of interest.
+
+    Returns
+    -------
+    image : ee.Image
+        Image with a band of the distance raster from the features.
+    """
+
+    # Generate the distance raster.
+    dist = features.distance().rename(name)
+
+    # Add the distance raster as a band.
+    image = image.addBands(dist, None, True)
 
     return image
