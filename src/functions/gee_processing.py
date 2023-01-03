@@ -17,8 +17,8 @@ def rename_bands(image: ee.Image) -> ee.Image:
     """
 
     # Define the original and the new names.
-    ori_names = ["SR_B1", "SR_B2", "SR_B3", "SR_B4", "ST_B6"]
-    new_names = ["BLUE", "GREEN", "RED", "NIR", "TEMPERATURE"]
+    ori_names = ["SR_B1", "SR_B2", "SR_B3", "SR_B4", "SR_B7", "ST_B6"]
+    new_names = ["BLUE", "GREEN", "RED", "NIR", "SWIR", "TEMPERATURE"]
 
     # Select the bands with the original names an rename them.
     image = image.select(ori_names).rename(new_names)
