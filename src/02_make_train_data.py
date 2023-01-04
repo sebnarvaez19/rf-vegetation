@@ -3,7 +3,7 @@ import rasterio
 
 from functions.gis_utils import sample_points
 
-sample_path = "data/processed/sample_points.csv"
+sample_path = "data/processed/sample_points.geojson"
 points_path = "data/external/control_points/control_points.shp"
 raster_path = "data/raster/train_test_image/train_img.tiff"
 
@@ -16,7 +16,7 @@ def main():
 
     sample = sample.dropna(subset=bands)
 
-    sample.to_csv(sample_path)
+    sample.to_file(sample_path)
 
     return None
 
