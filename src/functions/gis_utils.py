@@ -23,12 +23,14 @@ def sample_points(
     sample : geopandas.GeoDataFrame
         Geodataframe with the raster values
     """
-
+    geom = gdf.geometry
     labels = raster.descriptions
     coords = [(x, y) for x, y in zip(gdf.geometry.x, gdf.geometry.y)]
     sample = np.array([s for s in raster.sample(coords)])
 
     sample = pd.DataFrame(sample, columns=labels)
     sample = pd.concat([sample, gdf], axis=1)
+
+    sample = gpd.GeoDataFrame(sample[sample.columns[:-1]], geometry=geom)
 
     return sample
