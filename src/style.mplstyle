@@ -63,4 +63,4 @@ legend.framealpha: 1
 legend.frameon: False
 legend.fontsize: small
 legend.title_fontsize: small
-legend.scatterpoints: 3
+legend.scatterpoints: 1
