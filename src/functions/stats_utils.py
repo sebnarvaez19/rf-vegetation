@@ -78,7 +78,7 @@ def plot_variable_importance(
     ax.set_ylabel(f"Component 2: {pca.explained_variance_ratio_[0]:0.3f}")
 
     # Add legend in uper-right corner
-    ax.legend(loc=1, title=y.name)
+    ax.legend(loc=1, title=labels.name)
 
     return ax
 
