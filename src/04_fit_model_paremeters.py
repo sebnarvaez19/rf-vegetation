@@ -13,8 +13,25 @@ plt.style.use("src/style.mplstyle")
 seed = 1998
 size = 0.4
 variables = [
-    "GREEN", "NIR", "SWIR", "TEMPERATURE", 
-    "NDVI", "ELEVATION", "DISTANCE_SHORELINE",
+    "GREEN",
+    "NIR",
+    "SWIR",
+    "TEMPERATURE",
+    "NDVI",
+    "ELEVATION",
+    "DISTANCE_DRAINAGES",
+    "DISTANCE_SHORELINE",
+]
+
+short_names = [
+    "Green",
+    "NIR",
+    "SWIR",
+    "Temp",
+    "NDVI",
+    "Elev",
+    "D. R",
+    "D. S",
 ]
 
 data_path = "data/processed/sample_points.geojson"
@@ -76,7 +93,7 @@ def main():
     rf.fit(X_train, y_train)
 
     importance = pd.DataFrame({
-        "variable": [v.capitalize()[:5] for v in variables],
+        "variable": short_names,
         "importance": rf.feature_importances_
     }).sort_values(by="importance", ascending=False)
 

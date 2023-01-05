@@ -17,9 +17,10 @@ variables = [
     "NIR",
     "SWIR",
     "TEMPERATURE",
-    "ELEVATION",
-    "DISTANCE_SHORELINE",
     "NDVI",
+    "ELEVATION",
+    "DISTANCE_DRAINAGES",
+    "DISTANCE_SHORELINE",
 ]
 
 X = data[variables].copy()
