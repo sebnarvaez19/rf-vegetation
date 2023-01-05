@@ -14,7 +14,7 @@ seed = 1998
 size = 0.4
 variables = [
     "GREEN", "NIR", "SWIR", "TEMPERATURE", 
-    "ELEVATION", "DISTANCE_SHORELINE", "NDVI"
+    "NDVI", "ELEVATION", "DISTANCE_SHORELINE",
 ]
 
 data_path = "data/processed/sample_points.geojson"
