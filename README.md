@@ -1,4 +1,4 @@
-# RF Classifier on La Guajira (Colombia)
+# Vegetation Coverage Classification on La Guajira (Colombia)
 
 Classify the vegetation coverage of Cocientas basin in La Guajira (Colombia) with a Random Forest model to get the total vegetation coverage and try to predict futer changes.
 
