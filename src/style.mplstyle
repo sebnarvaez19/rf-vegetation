@@ -1,6 +1,5 @@
 # Figure properties
 figure.figsize: 4, 4
-figure.autolayout: True
 figure.titlesize: small
 figure.titleweight: bold
 
@@ -9,7 +8,6 @@ font.family: "serif"
 
 # Font properties
 font.size: 12
-text.usetex : True
 
 # Axes properties
 axes.linewidth: 0.5
