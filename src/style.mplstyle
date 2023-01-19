@@ -27,13 +27,11 @@ xtick.top: True
 xtick.direction: in
 xtick.labelsize: small
 xtick.minor.visible: True
-# xtick.alignment: center
 
 ytick.right: True
 ytick.direction: in
 ytick.labelsize: small
 ytick.minor.visible: True
-# ytick.alignment: center
 
 xtick.major.size: 4
 xtick.major.width: 0.5
@@ -44,6 +42,9 @@ ytick.major.size: 5
 ytick.major.width: 0.5
 ytick.minor.size: 3
 ytick.minor.width: 0.5
+
+# Errorbar properties
+errorbar.capsize: 5.0
 
 # Images properties
 image.aspect: equal
